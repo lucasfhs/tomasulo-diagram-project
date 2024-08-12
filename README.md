@@ -1,5 +1,5 @@
 # Tomasulo
-![Uhuu](https://wifflegif.com/gifs/130649-white-people-dancing-dancing-gif)
+![](https://64.media.tumblr.com/453b31c32f735b4c8ed0abf066d268e3/tumblr_migrn0zMlV1qff6llo1_400.gif)
 Falta Desenvolver :
 1- Despacho com e sem atraso
 2- Dependência de dados verdadeira, antidependência e dependência de saída
