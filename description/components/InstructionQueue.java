@@ -1,69 +1,60 @@
 package components;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import complements.Instruction;
+import complements.InstructionQueueElement;
+import complements.MemoryInstructionWire;
+import complements.Tag;
+import complements.UnitControlBranchWire;
+import complements.Wire;
+
 
 public class InstructionQueue {
+    // Fio que vem da memoria de instruções
+    public MemoryInstructionWire memoryInstructionWire;
+    // Fila de instrucoes propriamente dita
+    public ArrayList<InstructionQueueElement> instructionQueue = new ArrayList<>();
+    // Fio que liga a unidade de despacho e decodificacao
+    public UnitControlBranchWire dispatchAndDecodeUnitWire;
 
-    private boolean control; // Sinal de controle que determina se a fila pode continuar avançando.
-    private HashMap<String, Instruction<?>> queue; // Estrutura que armazena as instruções na fila. Cada entrada
-                                                   // associa uma tag textual (ex: "01") à uma instrução (ex: Add).
-    private int currentQueueId = -1; // Identificador da posição atual na fila. Inicia em -1 indicando que nenhuma
-                                     // instrução foi processada.
 
-    // Construtor que inicializa a fila e o controle.
-    public InstructionQueue() {
-        this.control = false; // Control inicializado como falso, desabilitando o avanço da fila.
-        this.queue = new HashMap<>(); // Inicializa a fila como um HashMap vazio.
-    }
-
-    // Método para adicionar uma nova instrução à fila.
-    public void addQueueElement(String tag, Instruction<?> instruction) {
-        queue.put(tag, instruction); // Insere a instrução na fila associada à sua respectiva tag.
-    }
-
-    // Método para obter a próxima instrução na fila.
-    public Instruction<?> proxQueueElement() throws Exception {
-        Instruction<?> proxInstruction = null; // Inicializa a variável que armazenará a próxima instrução.
-        if (control) { // Verifica se o sinal de controle permite o avanço da fila.
-            // Despacho em ordem: tenta recuperar a próxima instrução na sequência numérica.
-            proxInstruction = queue.get(String.valueOf(currentQueueId + 1));
-            if (proxInstruction != null) {
-                currentQueueId++; // Atualiza o ID atual para o próximo na sequência.
-                return proxInstruction; // Retorna a próxima instrução.
-            } else {
-                throw new Exception("No next instruction found in the queue."); // Exceção se não houver próxima instrução.
-            }
-        } else {
-            return proxInstruction; // Retorna null se o sinal de controle não permitir acesso à próxima instrução.
+    public InstructionQueue(){
+    // Classe que existe por fins de completude
+    // Especifica que a fila de instruções possui um tamanho e que os dados são inicializados e indicados
+    // Com ControlSignal = false, demonstrando que é uma posição que não possui um dado válido e pode ser sobrescrita.
+        for(int i = 0; i < 127; i++){
+            instructionQueue.add(new InstructionQueueElement(null, new Tag( instructionQueue.size() + 1), false));
         }
+        
     }
 
-    // Getter e Setter para o sinal de controle.
-    public boolean isControl() {
-        return control;
+    public void behavior(){
+        // Insere a instrucao adquirida da memoria de instrucoes na fila (em ordem)
+        Instruction<?> instructionFromMemory =  memoryInstructionWire.reciveDataMemory();
+        // Procura uma posicao livre na fila de instrucoes para colocar o dado vindo
+        // Da memoria de instrucoes na fila
+        for(InstructionQueueElement i : instructionQueue){
+            if(i.controlSignalElement == false){
+                i.elementInstruction = instructionFromMemory;
+                i.controlSignalElement = true;
+            }
+        }
+        // A unidade de despacho pode enviar um sinal indicando que a instrucao nao deve ser despachada
+        if(dispatchAndDecodeUnitWire.reciveControlSignal() == true){
+            // Caso o despacho seja possivel a instrucao é enviada em ordem para a unidade de despacho
+            // e decodificao
+            dispatchAndDecodeUnitWire.sendData(instructionQueue.getFirst());
+            // Apos o despacho ela sai da fila em ordem
+            // Para remover o item da fila de instrucoes definimos seu sinal de controle como false
+            // Indicando que aquela nao é mais uma posicao valida e pode ser sobrescrita
+            instructionQueue.getFirst().controlSignalElement = false;
+        }
+        // Caso o sinal de controle indique um atraso no despacho ele nao executa o procedimento
+        // Supracitado.
+
     }
 
-    public void setControl(boolean control) {
-        this.control = control;
-    }
-
-    // Getter e Setter para a fila de instruções.
-    public HashMap<String, Instruction<?>> getQueue() {
-        return queue;
-    }
-
-    public void setQueue(HashMap<String, Instruction<?>> queue) {
-        this.queue = queue;
-    }
-
-    // Getter e Setter para o ID atual da fila.
-    public int getCurrentQueueId() {
-        return currentQueueId;
-    }
-
-    public void setCurrentQueueId(int currentQueueId) {
-        this.currentQueueId = currentQueueId;
-    }
     
 }

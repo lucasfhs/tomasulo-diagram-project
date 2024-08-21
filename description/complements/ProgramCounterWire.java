@@ -1,6 +1,6 @@
 package complements;
 
-public class UnitControlBranchWire extends Wire {
+public class ProgramCounterWire extends Wire {
 
     @Override
     public void sendData(Object a) {
@@ -12,14 +12,10 @@ public class UnitControlBranchWire extends Wire {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'sendData'");
     }
-    public Address reciveAddressBranch() {
+    public Address reciveAddress() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'sendData'");
     }
-    @Override
-    public void reciveData() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'reciveData'");
-    }
+
     
 }

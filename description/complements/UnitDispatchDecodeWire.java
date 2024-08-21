@@ -1,6 +1,6 @@
 package complements;
 
-public class UnitControlBranchWire extends Wire {
+public class UnitDispatchDecodeWire extends Wire {
 
     @Override
     public void sendData(Object a) {

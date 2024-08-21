@@ -1,9 +1,14 @@
 package complements;
 
-public abstract class Wire {
+public class Wire {
     
-
-    public abstract void sendData(Object a);
-    public abstract void reciveData();
+    public void sendData(Object a) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'sendData'");
+    }
+    public void reciveData() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'reciveData'");
+    }
 }
 
