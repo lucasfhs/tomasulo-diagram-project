@@ -23,4 +23,4 @@ This project is licensed under the MIT License.
 
 Below is an image representation of the Tomasulo algorithm:
 
-![Tomasulo Diagram](TomasuloProject.jpeg)
+![Tomasulo Diagram](project/TomasuloProject.jpg)
