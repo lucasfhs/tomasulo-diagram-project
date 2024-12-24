@@ -1,10 +1,26 @@
-# Tomasulo
-![](https://64.media.tumblr.com/453b31c32f735b4c8ed0abf066d268e3/tumblr_migrn0zMlV1qff6llo1_400.gif)
-Falta Desenvolver :
-1- Despacho com e sem atraso
-2- Dependência de dados verdadeira, antidependência e dependência de saída
-3- Hazard estrutural, Hazard de controle
-4- Instruções de desvio
-5- Unidade funcional cheia
-6- Espera no CDB
+# Tomasulo Algorithm Diagram
 
+This project contains a diagram of the Tomasulo algorithm, which is used for out-of-order execution in processors. The diagram visualizes key components of the algorithm, including reservation stations, register renaming, common data bus (CDB).
+
+## Diagram Overview
+
+- The diagram illustrates the dynamic scheduling of instructions.
+
+## How to Open the Diagram
+
+1. Download the `TomasuloDiagram.drawio` file from this repository.
+2. Open it in [Draw.io](https://app.diagrams.net/) to view and edit the diagram.
+
+## Technologies
+
+- **Draw.io** (or any compatible diagram tool) to open and edit the diagram.
+
+## License
+
+This project is licensed under the MIT License.
+
+## Tomasulo Diagram
+
+Below is an image representation of the Tomasulo algorithm:
+
+![Tomasulo Diagram](TomasuloProject.jpeg)
